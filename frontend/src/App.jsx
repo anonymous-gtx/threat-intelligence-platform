@@ -1,26 +1,45 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Dashboard from "./pages/Dashboard";
-import Login from "./pages/Login.jsx";
-import Register from "./pages/Register";
-import Threats from "./pages/Threats.jsx";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import { AuthProvider, useAuth, AuthContext } from "./context/AuthContext"; // ✅ FIXED IMPORT
+import Signup from "./pages/Signup";
 import ThreatDetail from "./pages/ThreatDetail";
-import SubmitThreat from "./pages/SubmitThreat";
-import Agreements from "./pages/Agreements";
+import { Toaster } from "react-hot-toast";
+import AddThreat from "./pages/AddThreat";
 
-function AppRouter() {
-    return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/threats" element={<Threats />} />
-                <Route path="/threats/:id" element={<ThreatDetail />} />
-                <Route path="/submit-threat" element={<SubmitThreat />} />
-                <Route path="/agreements" element={<Agreements />} />
-            </Routes>
-        </Router>
-    );
-}
+const App = () => {
+  return (
+    <AuthProvider>
+      <Router>
+        <Toaster/>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/threat/:id" element={<ThreatDetail />} />
+          <Route path="/add-threat" element={<AddThreat />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
+  );
+};
 
-export default AppRouter;
+const Navbar = () => {
+  const { user, logout } = useAuth();
+
+  return (
+    <nav className="bg-gray-800 text-white p-4 flex justify-between">
+      <h1 className="text-lg font-bold">Threat Report</h1>
+      {user ? (
+        <button onClick={logout} className="px-4 py-2 bg-red-500 rounded">
+          Logout
+        </button>
+      ) : (
+        <a href="/login" className="text-blue-400">Login</a>
+      )}
+    </nav>
+  );
+};
+
+export default App;

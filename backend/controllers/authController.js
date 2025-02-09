@@ -58,7 +58,6 @@ export const login = async (req, res) => {
 
         // Find the user by email
         const [user] = await pool.query('SELECT * FROM users WHERE email = ?', [email]);
-        console.log(user,"---------------");
         
         if (user.length === 0) {
             return res.status(404).json({ message: 'User not found' });
@@ -71,7 +70,7 @@ export const login = async (req, res) => {
         }
 
         // Generate a JWT token with a 1-hour expiration (can be customized)
-        const token = jwt.sign({ id: user[0].id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ id: user[0].id }, process.env.JWT_SECRET, { expiresIn: '12h' });
 
         // Send response with token
         res.status(200).json({ token });
