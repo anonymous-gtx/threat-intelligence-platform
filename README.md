@@ -52,7 +52,7 @@ Ensure you have the following installed on your system:
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/threat-intelligence.git
+git clone https://github.com/anonymous-gtx/threat-intelligence.git
 cd threat-intelligence
 ```
 
