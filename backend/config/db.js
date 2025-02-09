@@ -7,7 +7,7 @@ const pool = await mysql.createPool({
     host: "localhost",
     user: "root",
     password: "",
-    database: "intern",
+    database: "threat_intelligence",
 });
 
 
